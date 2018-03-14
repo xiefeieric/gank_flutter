@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'android_view.dart';
+import 'ios_view.dart';
+import 'hot_view.dart';
 
 void main() => runApp(new MyApp());
 
@@ -159,27 +162,8 @@ class MyAppState extends State<MyApp> {
   }
 }
 
-class Android extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-       child: Text("Android"),
-      )
-    );
-  }
-}
 
-class IOS extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new Center(child: Text("iOS"));
-  }
-}
 
-class Hot extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new Center(child: Text("Hot"));
-  }
-}
+
+
+
