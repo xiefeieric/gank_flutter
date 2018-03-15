@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gank_flutter/model_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import "dart:convert";
@@ -6,61 +7,60 @@ import "dart:convert";
 class Android extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AndroidState();
+    return new AndroidState();
   }
 }
 
 class AndroidState extends State<Android> {
-
   String _test = "Android";
-
+  List<ModelItem> _items;
 
   @override
   void initState() {
     super.initState();
+    _items = [];
     loadData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-      child: Text(_test),
-    ));
+    return new Scaffold(
+        body: new ListView.builder(
+            itemCount: _items.length,
+            itemBuilder: (BuildContext context, int position) {
+              return getRow(position);
+            }));
+  }
+
+  Widget getRow(int position) {
+    return new GestureDetector(
+      child: new Padding(
+        padding: new EdgeInsets.all(6.0),
+        child: new ListTile(
+          title: new Text(
+            _items[position].desc,
+            style: new TextStyle(
+              color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.bold, ),
+          ),
+        ),
+        ),
+      onTap: () {
+        debugPrint(_items[position].url);
+      },
+    );
   }
 
   loadData() async {
-//    var url = "https://gank.io/api/data/Android/10/1";
-//    var httpClient = HttpClient();
-//
-//    String result = "";
-//    try {
-//      var request = await httpClient.getUrl(Uri.parse(url));
-//      var response = await request.close();
-//      if (response.statusCode == HttpStatus.OK) {
-//        var json = await response.transform(UTF8.decoder).join();
-//        var data = JSON.decode(json);
-//        result = data['origin'];
-//      } else {
-//        result =
-//        'Error getting data:\nHttp status ${response.statusCode}';
-//      }
-//    } catch (exception) {
-//      debugPrint(exception.toString());
-//        result = "failed load data";
-//    }
-//    if (!mounted) return;
-//    setState((){
-//      _test = result;
-//    });
-
-    String dataURL = "https://gank.io/api/data/Android/10/1";
+    String dataURL = "https://gank.io/api/data/Android/20/1";
     http.Response response = await http.get(dataURL);
-    debugPrint(response.statusCode.toString());
     setState(() {
-      _test = response.body.toString();
+      debugPrint(response.statusCode.toString());
+      Map data = JSON.decode(response.body);
+      for (var value in data['results']) {
+        ModelItem item = new ModelItem();
+        item.mapFromObj(value);
+        _items.add(item);
+      }
     });
   }
 }
-
-

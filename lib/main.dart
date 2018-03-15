@@ -10,7 +10,7 @@ class MyApp extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return new MyAppState();
   }
 }
 
@@ -19,7 +19,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       title: 'Gank-Flutter',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
@@ -28,9 +28,9 @@ class MyAppState extends State<MyApp> {
 //        '/today': (context) => Today(),
 //        '/android': (context) => Android()
 //      },
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text("Gank"),
+      home: new Scaffold(
+          appBar: new AppBar(
+            title: new Text("Gank"),
           ),
 //          drawer: Drawer(
 //            child: ListView(
@@ -110,7 +110,7 @@ class MyAppState extends State<MyApp> {
 //              ],
 //            ),
 //          ),
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar: new BottomNavigationBar(
             currentIndex: _index,
             onTap: (index) {
               debugPrint(index.toString());
@@ -119,41 +119,41 @@ class MyAppState extends State<MyApp> {
               });
             },
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.android),
-                title: Text("Android"),
+              new BottomNavigationBarItem(
+                icon: new Icon(Icons.android),
+                title: new Text("Android"),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings_system_daydream),
-                title: Text("iOS"),
+              new BottomNavigationBarItem(
+                icon: new Icon(Icons.settings_system_daydream),
+                title: new Text("iOS"),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.photo),
-                title: Text("Hot"),
+              new BottomNavigationBarItem(
+                icon: new Icon(Icons.photo),
+                title: new Text("Hot"),
               )
             ],
           ),
-          body: Stack(
+          body: new Stack(
             children: <Widget>[
-              Offstage(
+              new Offstage(
                 offstage: _index != 0,
-                child: TickerMode(
+                child: new TickerMode(
                   enabled: _index == 0,
-                  child: MaterialApp(home: Android()),
+                  child: new MaterialApp(home: new Android()),
                 ),
               ),
-              Offstage(
+              new Offstage(
                 offstage: _index != 1,
-                child: TickerMode(
+                child: new TickerMode(
                   enabled: _index == 1,
-                  child: MaterialApp(home: IOS()),
+                  child: new MaterialApp(home: new IOS()),
                 ),
               ),
-              Offstage(
+              new Offstage(
                 offstage: _index != 2,
-                child: TickerMode(
+                child: new TickerMode(
                   enabled: _index == 2,
-                  child: MaterialApp(home: Hot()),
+                  child: new MaterialApp(home: new Hot()),
                 ),
               ),
             ],
