@@ -12,7 +12,6 @@ class Android extends StatefulWidget {
 }
 
 class AndroidState extends State<Android> {
-  String _test = "Android";
   List<ModelItem> _items;
 
   @override
@@ -25,11 +24,7 @@ class AndroidState extends State<Android> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: new ListView.builder(
-            itemCount: _items.length,
-            itemBuilder: (BuildContext context, int position) {
-              return getRow(position);
-            }));
+        body: getListView());
   }
 
   Widget getRow(int position) {
@@ -40,10 +35,13 @@ class AndroidState extends State<Android> {
           title: new Text(
             _items[position].desc,
             style: new TextStyle(
-              color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.bold, ),
+              color: Colors.black,
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        ),
+      ),
       onTap: () {
         debugPrint(_items[position].url);
       },
@@ -62,5 +60,36 @@ class AndroidState extends State<Android> {
         _items.add(item);
       }
     });
+  }
+
+  showLoadingDialog() {
+    if (_items.length == 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  getListView() {
+    return new Stack(
+      children: <Widget>[
+        new ListView.builder(
+            itemCount: _items.length,
+            itemBuilder: (BuildContext context, int position) {
+              return getRow(position);
+            }),
+        getBody()
+      ],
+    );
+  }
+
+  getBody() {
+    if (showLoadingDialog()) {
+      return new Center(
+        child: new CircularProgressIndicator()
+      );
+    } else {
+      return new Text("");
+    }
   }
 }
